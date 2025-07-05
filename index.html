@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>通販の虎 × 四国グルメ MAP</title>
+
+  <!-- Leaflet の CSS（CDN） -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <!-- 画面全体を地図にする簡易スタイル -->
+  <style>
+    html, body { height:100%; margin:0; }
+    #map       { height:100%; }
+  </style>
+</head>
+<body>
+
+  <!-- 地図を描画するコンテナ -->
+  <div id="map"></div>
+
+  <!-- Leaflet の JS（CDN） -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+
+  <!-- === ここから独自スクリプト ===================================== -->
+  <script>
+  /* 1. 地図の初期化 -------------------------------------------------- */
+  const map = L.map('map').setView([33.9, 133.9], 8);   // 四国中心
+
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    { attribution: '© OpenStreetMap contributors' }
+  ).addTo(map);
+
+  /* 2. 四国６商品のデータ ------------------------------------------- */
+  const spots = [
+    { name: '讃岐名物やみつきチャーシュー（多度津町）', lat: 34.270116, lon: 133.751806 },
+    { name: '丸亀骨付鳥餃子（丸亀市）',               lat: 34.285975, lon: 133.792225 },
+    { name: '上勝棚田米どぶろく（上勝町）',           lat: 33.883333, lon: 134.400000 },
+    { name: 'フォアグラ芋けんぴ（高知市）',           lat: 33.550000, lon: 133.533000 },
+    { name: '西山金時スウィートポテトロール（室戸市）', lat: 33.286600, lon: 134.154700 },
+    { name: '田野屋塩二郎の塩（田野町）',             lat: 33.440332, lon: 134.008607 }
+  ];
+
+  /* 3. マーカーを配置 ----------------------------------------------- */
+  spots.forEach(s => {
+    L.marker([s.lat, s.lon])
+      .addTo(map)
+      .bindPopup(`<strong>${s.name}</strong>`);
+  });
+  </script>
+  <!-- ============================================================= -->
+</body>
+</html>
